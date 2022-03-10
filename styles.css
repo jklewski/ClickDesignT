@@ -79,6 +79,21 @@ html {
     color: white;
 }
 
+.buttongroup {
+    position: absolute;
+    display:flex;
+    right:20%;
+    top:15vh;
+    z-index:4;
+    background-color:gray;
+    border: 2px solid black;
+}
+
+.form {
+    padding:10px;
+    font-size:1.2rem;
+    color:white
+}
 @keyframes slide-in {
     0%{
         transform: translateY(100%);
