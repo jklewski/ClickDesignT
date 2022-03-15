@@ -29,11 +29,22 @@
         </div>
         <div class="buttongroup">
             <form action="/action_page.php" class="form">
+                <p><i>Expert assessment</i></p>
                 <input id=button_termites type=checkbox>
                 <label for="button_termites">Termites</label>
                 <br>
                 <input id=button_boring type=checkbox>
                 <label for="button_boring">Wood-boring beetles</label>
+                <br><br>
+                <p><i>Model (projection)</i></p>
+                <input id=model1 type=checkbox>
+                <label for="model1">Contemporary</label>
+                <br>
+                <input id=model2 type=checkbox>
+                <label for="model2">RCP2.6</label>
+                <br>
+                <input id=model3 type=checkbox>
+                <label for="model3">RCP8.5</label>
             </form>
         </div>
         <div class="popup">
@@ -64,7 +75,7 @@
             spec = JSON.parse(this.responseText)
             spec = [spec]
         }
-        xhttp2.open("GET", "shp_databaseMK.json", false);
+        xhttp2.open("GET", "out_shapefile_combined.json", false);
         xhttp2.send();
 
         var cinfo = []

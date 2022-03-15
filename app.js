@@ -98,13 +98,16 @@ countryLayers = L.geoJSON(countryborders, {
 handleForm = document.querySelector(".form")
 termiteButton = handleForm[0];
 boringButton = handleForm[1];
+model1Button = handleForm[2];
+model2Button = handleForm[3];
+model3Button = handleForm[4];
 termiteButton.addEventListener('click', () => {
     if (termiteButton.checked) {
         //add polygon layer
-        layersTermite_yes = L.geoJSON(spec[0].features[0], {
+        layersTermite_yes = L.geoJSON(spec[0].features[6], {
             style: { color: "red", weight: 1, opacity: 0.5, fillColor: "red", fillOpacity: 0.5 }
         }).addTo(map);
-        layersTermite_no = L.geoJSON(spec[0].features[1], {
+        layersTermite_no = L.geoJSON(spec[0].features[7], {
             style: { color: "green", weight: 1, opacity: 0.5, fillColor: "green", fillOpacity: 0.5 }
         }).addTo(map);
         //add multipoint layer (needs to be converted to layer)
@@ -118,10 +121,64 @@ termiteButton.addEventListener('click', () => {
 boringButton.addEventListener('click', () => {
     if (boringButton.checked) {
         //add polygon layer
-        layersBoringYes = L.geoJSON(spec[0].features[2], {
+        layersBoringYes = L.geoJSON(spec[0].features[8], {
             style: { color: "blue", weight: 1, opacity: 0.5, fillColor: "blue", fillOpacity: 0.5 }
         }).addTo(map);
     } else {
         map.removeLayer(layersBoringYes)
     }
 })
+
+model1Button.addEventListener('click', () => {
+if (model1Button.checked) {
+    //add polygon layer
+    layersModel1_yes = L.geoJSON(spec[0].features[0], {
+        style: { color: "red", weight: 1, opacity: 0.5, fillColor: "red", fillOpacity: 0.5 }
+    }).addTo(map);
+    layersModel1_no = L.geoJSON(spec[0].features[3], {
+        style: { color: "green", weight: 1, opacity: 0.5, fillColor: "green", fillOpacity: 0.5 }
+    }).addTo(map);
+    //add multipoint layer (needs to be converted to layer)
+
+
+} else {
+    map.removeLayer(layersModel1_yes)
+    map.removeLayer(layersModel1_no)
+}
+})
+
+model2Button.addEventListener('click', () => {
+    if (model2Button.checked) {
+        //add polygon layer
+        layersModel2_yes = L.geoJSON(spec[0].features[1], {
+            style: { color: "red", weight: 1, opacity: 0.5, fillColor: "red", fillOpacity: 0.5 }
+        }).addTo(map);
+        layersModel2_no = L.geoJSON(spec[0].features[4], {
+            style: { color: "green", weight: 1, opacity: 0.5, fillColor: "green", fillOpacity: 0.5 }
+        }).addTo(map);
+        //add multipoint layer (needs to be converted to layer)
+    
+    
+    } else {
+        map.removeLayer(layersModel2_yes)
+        map.removeLayer(layersModel2_no)
+    }
+    })
+
+    model3Button.addEventListener('click', () => {
+        if (model3Button.checked) {
+            //add polygon layer
+            layersModel3_yes = L.geoJSON(spec[0].features[2], {
+                style: { color: "red", weight: 1, opacity: 0.5, fillColor: "red", fillOpacity: 0.5 }
+            }).addTo(map);
+            layersModel3_no = L.geoJSON(spec[0].features[5], {
+                style: { color: "green", weight: 1, opacity: 0.5, fillColor: "green", fillOpacity: 0.5 }
+            }).addTo(map);
+            //add multipoint layer (needs to be converted to layer)
+        
+        
+        } else {
+            map.removeLayer(layersModel3_yes)
+            map.removeLayer(layersModel3_no)
+        }
+        })
