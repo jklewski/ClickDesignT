@@ -101,84 +101,89 @@ boringButton = handleForm[1];
 model1Button = handleForm[2];
 model2Button = handleForm[3];
 model3Button = handleForm[4];
+
+layersTermite_yes = L.geoJSON(spec[0].features[6], {
+    style: { color: "red", weight: 1, opacity: 0, fillColor: "red", fillOpacity: 0 }
+}).addTo(map);
+layersTermite_no = L.geoJSON(spec[0].features[7], {
+    style: { color: "green", weight: 1, opacity: 0, fillColor: "green", fillOpacity: 0 }
+}).addTo(map);
+
 termiteButton.addEventListener('click', () => {
     if (termiteButton.checked) {
-        //add polygon layer
-        layersTermite_yes = L.geoJSON(spec[0].features[6], {
-            style: { color: "red", weight: 1, opacity: 0.5, fillColor: "red", fillOpacity: 0.5 }
-        }).addTo(map);
-        layersTermite_no = L.geoJSON(spec[0].features[7], {
-            style: { color: "green", weight: 1, opacity: 0.5, fillColor: "green", fillOpacity: 0.5 }
-        }).addTo(map);
-        //add multipoint layer (needs to be converted to layer)
-
-
+        fadeLayer([layersTermite_yes,layersTermite_no], 0, 0.5, 0.02, 10)        
     } else {
-        map.removeLayer(layersTermite_yes)
-        map.removeLayer(layersTermite_no)
-    }
-})
-boringButton.addEventListener('click', () => {
-    if (boringButton.checked) {
-        //add polygon layer
-        layersBoringYes = L.geoJSON(spec[0].features[8], {
-            style: { color: "blue", weight: 1, opacity: 0.5, fillColor: "blue", fillOpacity: 0.5 }
-        }).addTo(map);
-    } else {
-        map.removeLayer(layersBoringYes)
-    }
-})
-
-model1Button.addEventListener('click', () => {
-if (model1Button.checked) {
-    //add polygon layer
-    layersModel1_yes = L.geoJSON(spec[0].features[0], {
-        style: { color: "red", weight: 1, opacity: 0.5, fillColor: "red", fillOpacity: 0.5 }
-    }).addTo(map);
-    layersModel1_no = L.geoJSON(spec[0].features[3], {
-        style: { color: "green", weight: 1, opacity: 0.5, fillColor: "green", fillOpacity: 0.5 }
-    }).addTo(map);
-    //add multipoint layer (needs to be converted to layer)
-
-
-} else {
-    map.removeLayer(layersModel1_yes)
-    map.removeLayer(layersModel1_no)
-}
-})
-
-model2Button.addEventListener('click', () => {
-    if (model2Button.checked) {
-        //add polygon layer
-        layersModel2_yes = L.geoJSON(spec[0].features[1], {
-            style: { color: "red", weight: 1, opacity: 0.5, fillColor: "red", fillOpacity: 0.5 }
-        }).addTo(map);
-        layersModel2_no = L.geoJSON(spec[0].features[4], {
-            style: { color: "green", weight: 1, opacity: 0.5, fillColor: "green", fillOpacity: 0.5 }
-        }).addTo(map);
-        //add multipoint layer (needs to be converted to layer)
-    
-    
-    } else {
-        map.removeLayer(layersModel2_yes)
-        map.removeLayer(layersModel2_no)
+        fadeLayer([layersTermite_yes,layersTermite_no], 0.5, 0, -0.02, 10)   
     }
     })
 
+layersBoringYes = L.geoJSON(spec[0].features[8], {
+    style: { color: "blue", weight: 1, opacity: 0, fillColor: "blue", fillOpacity: 0 }
+}).addTo(map);
+
+boringButton.addEventListener('click', () => {
+    if (boringButton.checked) {
+        fadeLayer([layersBoringYes], 0, 0.5, 0.02, 10)        
+    } else {
+        fadeLayer([layersBoringYes], 0.5, 0, -0.02, 10)   
+    }
+    })
+
+
+layersModel1_yes = L.geoJSON(spec[0].features[0], {
+    style: { color: "red", weight: 1, opacity: 0, fillColor: "red", fillOpacity: 0 }
+}).addTo(map);
+layersModel1_no = L.geoJSON(spec[0].features[3], {
+    style: { color: "green", weight: 1, opacity: 0, fillColor: "green", fillOpacity: 0 }
+}).addTo(map);
+
+model1Button.addEventListener('click', () => {
+    if (model1Button.checked) {
+        fadeLayer([layersModel1_no,layersModel1_yes], 0, 0.5, 0.02, 10)        
+    } else {
+        fadeLayer([layersModel1_no,layersModel1_yes], 0.5, 0, -0.02, 10)   
+    }
+    })
+
+layersModel2_yes = L.geoJSON(spec[0].features[1], {
+    style: { color: "red", weight: 1, opacity: 0, fillColor: "red", fillOpacity: 0 }
+}).addTo(map)
+layersModel2_no = L.geoJSON(spec[0].features[4], {
+    style: { color: "green", weight: 1, opacity: 0, fillColor: "green", fillOpacity: 0 }
+}).addTo(map)
+
+model2Button.addEventListener('click', () => {
+    if (model2Button.checked) {
+        fadeLayer([layersModel2_no,layersModel2_yes], 0, 0.5, 0.02, 10)        
+    } else {
+        fadeLayer([layersModel2_no,layersModel2_yes], 0.5, 0, -0.02, 10)   
+    }
+    })
+
+    layersModel3_yes = L.geoJSON(spec[0].features[2], {
+        style: { color: "red", weight: 1, opacity: 0, fillColor: "red", fillOpacity: 0 }
+    }).addTo(map)
+    layersModel3_no = L.geoJSON(spec[0].features[5], {
+        style: { color: "green", weight: 1, opacity: 0, fillColor: "green", fillOpacity: 0 }
+    }).addTo(map)
+    
     model3Button.addEventListener('click', () => {
         if (model3Button.checked) {
-            //add polygon layer
-            layersModel3_yes = L.geoJSON(spec[0].features[2], {
-                style: { color: "red", weight: 1, opacity: 0.5, fillColor: "red", fillOpacity: 0.5 }
-            }).addTo(map);
-            layersModel3_no = L.geoJSON(spec[0].features[5], {
-                style: { color: "green", weight: 1, opacity: 0.5, fillColor: "green", fillOpacity: 0.5 }
-            }).addTo(map);
-            //add multipoint layer (needs to be converted to layer)
-        
-        
+            fadeLayer([layersModel3_no,layersModel3_yes], 0, 0.5, 0.02, 10)        
         } else {
-            map.removeLayer(layersModel3_yes)
-            map.removeLayer(layersModel3_no)
+            fadeLayer([layersModel3_no,layersModel3_yes], 0.5, 0, -0.02, 10) 
         }
         })
+
+
+// Fade-in a one or severl layers
+function fadeLayer(lyr, startOpacity, finalOpacity, opacityStep, delay) {
+    let opacity = startOpacity;
+    let timer = setTimeout(function changeOpacity() {
+      if (Math.abs(opacity-finalOpacity)>Math.abs(opacityStep)/2) {
+        lyr.map((x) => x.setStyle({fillOpacity:opacity, opacity:opacity}))
+        opacity = opacity + opacityStep
+      }
+      timer = setTimeout(changeOpacity, delay);
+    }, delay)
+}
