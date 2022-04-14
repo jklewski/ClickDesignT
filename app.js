@@ -87,7 +87,7 @@ function onEachFeature(feature, layer) {
     });
 }
 var map = L.map('map').setView([55, 15], 3);
-L.tileLayer.provider('Stadia').addTo(map);
+L.tileLayer.provider('Stamen.TonerLite').addTo(map);
 layers = []
 layers_pts = []
 countryLayers = L.geoJSON(countryborders, {
