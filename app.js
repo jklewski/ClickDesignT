@@ -9,6 +9,7 @@ window.addEventListener('click', (e) => {
     }
 })
 
+
 //function for changing the style when mouse over
 function newstyle(e) {
     var targetLayer = e.target;
@@ -102,11 +103,17 @@ model1Button = handleForm[2];
 model2Button = handleForm[3];
 model3Button = handleForm[4];
 
-layersTermite_yes = L.geoJSON(spec[0].features[6], {
-    style: { color: "red", weight: 1, opacity: 0, fillColor: "red", fillOpacity: 0 }
+    // Default Stripes.
+    var stripes_green = new L.StripePattern({color:	"#006400", angle:90});
+    stripes_green.addTo(map);
+    var stripes_red = new L.StripePattern({color:"#ff0000", angle:0});
+    stripes_red.addTo(map);
+
+    layersTermite_yes = L.geoJSON(spec[0].features[6], {
+    style: { color: "red", weight: 1, opacity: 0, fillPattern: stripes_red,  fillColor: "red", fillOpacity: 0 }
 }).addTo(map);
 layersTermite_no = L.geoJSON(spec[0].features[7], {
-    style: { color: "green", weight: 1, opacity: 0, fillColor: "green", fillOpacity: 0 }
+    style: { color: "green", weight: 1, opacity: 0, fillPattern: stripes_green, fillColor: "green", fillOpacity: 0 }
 }).addTo(map);
 
 termiteButton.addEventListener('click', () => {
@@ -131,10 +138,10 @@ boringButton.addEventListener('click', () => {
 
 
 layersModel1_yes = L.geoJSON(spec[0].features[0], {
-    style: { color: "red", weight: 1, opacity: 0, fillColor: "red", fillOpacity: 0 }
+    style: { color: "red", weight: 1, opacity: 0, fillPattern: stripes_red, fillColor: "red", fillOpacity: 0 }
 }).addTo(map);
 layersModel1_no = L.geoJSON(spec[0].features[3], {
-    style: { color: "green", weight: 1, opacity: 0, fillColor: "green", fillOpacity: 0 }
+    style: { color: "green", weight: 1, opacity: 0, fillPattern: stripes_green, fillColor: "green", fillOpacity: 0 }
 }).addTo(map);
 
 model1Button.addEventListener('click', () => {
@@ -145,11 +152,15 @@ model1Button.addEventListener('click', () => {
     }
     })
 
+
+
+
+
 layersModel2_yes = L.geoJSON(spec[0].features[1], {
-    style: { color: "red", weight: 1, opacity: 0, fillColor: "red", fillOpacity: 0 }
+    style: { color: "red", weight: 1, opacity: 0, fillPattern: stripes_red, fillColor: "red", fillOpacity: 0 }
 }).addTo(map)
 layersModel2_no = L.geoJSON(spec[0].features[4], {
-    style: { color: "green", weight: 1, opacity: 0, fillColor: "green", fillOpacity: 0 }
+    style: { color: "green", weight: 1, opacity: 0, fillPattern: stripes_green, fillColor: "green", fillOpacity: 0 }
 }).addTo(map)
 
 model2Button.addEventListener('click', () => {
@@ -161,10 +172,10 @@ model2Button.addEventListener('click', () => {
     })
 
     layersModel3_yes = L.geoJSON(spec[0].features[2], {
-        style: { color: "red", weight: 1, opacity: 0, fillColor: "red", fillOpacity: 0 }
+        style: { color: "red", weight: 1, opacity: 0, fillPattern: stripes_red, fillColor: "red", fillOpacity: 0 }
     }).addTo(map)
     layersModel3_no = L.geoJSON(spec[0].features[5], {
-        style: { color: "green", weight: 1, opacity: 0, fillColor: "green", fillOpacity: 0 }
+        style: { color: "green", weight: 1, opacity: 0, fillPattern: stripes_green, fillColor: "green", fillOpacity: 0 }
     }).addTo(map)
     
     model3Button.addEventListener('click', () => {
@@ -174,7 +185,7 @@ model2Button.addEventListener('click', () => {
             fadeLayer([layersModel3_no,layersModel3_yes], 0.5, 0, -0.02, 10) 
         }
         })
-
+countryLayers.bringToFront()
 
 // Fade-in a one or severl layers
 function fadeLayer(lyr, startOpacity, finalOpacity, opacityStep, delay) {
