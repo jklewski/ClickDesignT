@@ -10,6 +10,77 @@ window.addEventListener('click', (e) => {
 })
 
 
+speciesName = [];
+familyName = [];
+nlayers = spec[0].features.length
+for (let i = 0; i < nlayers; i++) {
+    speciesName[i] = spec[0].features[i].properties.Name
+    familyName[i] = spec[0].features[i].properties.Family
+}
+
+var unique = familyName.filter(function(itm, i, a) {
+    return i == familyName.indexOf(itm);
+});
+
+for (var i in unique) {
+    family = unique[i]
+    div = document.createElement("div")
+    div.id = family
+    btn = document.createElement("input")
+    btn.type = "checkbox"
+    btn.id = family+"-b"
+    btn.value = family;
+    //btn.onclick = function () { toggleLayer(this.id) }
+    p = document.createElement("span");
+    p.innerHTML = family + " <i class=icon-collapse id='"+family+"-c'></i> ";
+    br = document.createElement("br");
+    div.appendChild(btn)
+    div.appendChild(p)
+    div.appendChild(br)
+    //create sublist of species
+    sub_div = document.createElement("div")
+    sub_div.className = 'speciesButtonGroups'
+    sub_div.id = family + 'species'
+    for (var j in familyName) {
+        if (familyName[j] == unique[i]) {
+            btn_sub = document.createElement("input")
+            btn_sub.type = "checkbox"
+            p_sub = document.createElement("span");
+            p_sub.innerHTML = speciesName[j]
+            sub_div.appendChild(btn_sub)
+            sub_div.appendChild(p_sub)
+            br = document.createElement("br");
+            sub_div.appendChild(br)
+            sub_div.style.display = 'none'
+        } 
+    }
+    div.appendChild(sub_div)
+    document.getElementById("buttons").appendChild(div)
+    document.getElementById(family+"-c").onclick = function() {
+    family=(this.id.slice(0,this.id.length-2))
+    sub_div = document.getElementById(family+'species')
+    if (sub_div.style.display=='none') {sub_div.style.display=''}
+    else {sub_div.style.display='none'}
+    }
+}
+
+/*
+for (var i in speciesName) {
+    name = speciesName[i]
+    btn = document.createElement("input")
+    btn.type = "checkbox"
+    btn.id = "id" + i
+    btn.value = name;
+    btn.onclick = function () { toggleLayer(this.id) }
+    p = document.createElement("span");
+    p.innerHTML = name;
+    br = document.createElement("br");
+    document.getElementById("buttons").appendChild(btn)
+    document.getElementById("buttons").appendChild(p)
+    document.getElementById("buttons").appendChild(br)
+}
+*/
+
 //function for changing the style when mouse over
 function newstyle(e) {
     var targetLayer = e.target;

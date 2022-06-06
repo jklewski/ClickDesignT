@@ -9,6 +9,20 @@ html {
     font-size: 15px;
 }
 
+.icon-collapse:hover{
+    background-color: black
+}
+
+.icon-collapse:active{
+    font-size:20px;
+}
+
+.speciesButtonGroups {
+    font-size:10px;
+    font-style:italic;
+    margin-left:10px
+}
+
 .container {
     height: 100vh;
     width: 100%;
