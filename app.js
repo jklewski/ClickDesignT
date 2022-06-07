@@ -171,98 +171,8 @@ countryLayers = L.geoJSON(countryborders, {
     onEachFeature: onEachFeature,
     mouseover: newstyle
 }).addTo(map);
-/*
-handleForm = document.querySelector(".form")
-termiteButton = handleForm[0];
-boringButton = handleForm[1];
-model1Button = handleForm[2];
-model2Button = handleForm[3];
-model3Button = handleForm[4];
-
-    // Default Stripes.
-    var stripes_green = new L.StripePattern({color:	"#006400", angle:90});
-    stripes_green.addTo(map);
-    var stripes_red = new L.StripePattern({color:"#ff0000", angle:0});
-    stripes_red.addTo(map);
-
-    layersTermite_yes = L.geoJSON(spec[0].features[6], {
-    style: { color: "red", weight: 1, opacity: 0, fillPattern: stripes_red,  fillColor: "red", fillOpacity: 0 }
-}).addTo(map);
-layersTermite_no = L.geoJSON(spec[0].features[7], {
-    style: { color: "green", weight: 1, opacity: 0, fillPattern: stripes_green, fillColor: "green", fillOpacity: 0 }
-}).addTo(map);
-
-termiteButton.addEventListener('click', () => {
-    if (termiteButton.checked) {
-        fadeLayer([layersTermite_yes,layersTermite_no], 0, 0.5, 0.02, 10)        
-    } else {
-        fadeLayer([layersTermite_yes,layersTermite_no], 0.5, 0, -0.02, 10)   
-    }
-    })
-
-layersBoringYes = L.geoJSON(spec[0].features[8], {
-    style: { color: "blue", weight: 1, opacity: 0, fillColor: "blue", fillOpacity: 0 }
-}).addTo(map);
-
-boringButton.addEventListener('click', () => {
-    if (boringButton.checked) {
-        fadeLayer([layersBoringYes], 0, 0.5, 0.02, 10)        
-    } else {
-        fadeLayer([layersBoringYes], 0.5, 0, -0.02, 10)   
-    }
-    })
 
 
-layersModel1_yes = L.geoJSON(spec[0].features[0], {
-    style: { color: "red", weight: 1, opacity: 0, fillPattern: stripes_red, fillColor: "red", fillOpacity: 0 }
-}).addTo(map);
-layersModel1_no = L.geoJSON(spec[0].features[3], {
-    style: { color: "green", weight: 1, opacity: 0, fillPattern: stripes_green, fillColor: "green", fillOpacity: 0 }
-}).addTo(map);
-
-model1Button.addEventListener('click', () => {
-    if (model1Button.checked) {
-        fadeLayer([layersModel1_no,layersModel1_yes], 0, 0.5, 0.02, 10)        
-    } else {
-        fadeLayer([layersModel1_no,layersModel1_yes], 0.5, 0, -0.02, 10)   
-    }
-    })
-
-
-
-
-
-layersModel2_yes = L.geoJSON(spec[0].features[1], {
-    style: { color: "red", weight: 1, opacity: 0, fillPattern: stripes_red, fillColor: "red", fillOpacity: 0 }
-}).addTo(map)
-layersModel2_no = L.geoJSON(spec[0].features[4], {
-    style: { color: "green", weight: 1, opacity: 0, fillPattern: stripes_green, fillColor: "green", fillOpacity: 0 }
-}).addTo(map)
-
-model2Button.addEventListener('click', () => {
-    if (model2Button.checked) {
-        fadeLayer([layersModel2_no,layersModel2_yes], 0, 0.5, 0.02, 10)        
-    } else {
-        fadeLayer([layersModel2_no,layersModel2_yes], 0.5, 0, -0.02, 10)   
-    }
-    })
-
-    layersModel3_yes = L.geoJSON(spec[0].features[2], {
-        style: { color: "red", weight: 1, opacity: 0, fillPattern: stripes_red, fillColor: "red", fillOpacity: 0 }
-    }).addTo(map)
-    layersModel3_no = L.geoJSON(spec[0].features[5], {
-        style: { color: "green", weight: 1, opacity: 0, fillPattern: stripes_green, fillColor: "green", fillOpacity: 0 }
-    }).addTo(map)
-    
-    model3Button.addEventListener('click', () => {
-        if (model3Button.checked) {
-            fadeLayer([layersModel3_no,layersModel3_yes], 0, 0.5, 0.02, 10)        
-        } else {
-            fadeLayer([layersModel3_no,layersModel3_yes], 0.5, 0, -0.02, 10) 
-        }
-        })
-*/
-countryLayers.bringToFront()
 
 // Fade-in a one or severl layers
 function fadeLayer(lyr, startOpacity, finalOpacity, opacityStep, delay) {
@@ -279,18 +189,52 @@ function fadeLayer(lyr, startOpacity, finalOpacity, opacityStep, delay) {
 function toggleLayer(btn) {
     species = btn.id.replace('_',' ')
     id = speciesName.findIndex((x)=> x==species)
-    console.log(speciesName[id])
+    id_family = unique.findIndex((x) => x==spec[0].features[id].properties.Family)
     if (btn.checked) {
     layers[id] = L.geoJSON(spec[0].features[id], {
-        style: { color: "red", weight: 1, opacity: 0, fillColor: "red", fillOpacity: 1 }
+        style: { color: "red", weight: 1, opacity: 0.5, fillColor: selectColor(id_family), fillOpacity: 0.35 }
     }).addTo(map);
     } else {
         map.removeLayer(layers[id])
     }
+    countryLayers.bringToFront()
 }
 
+//function to trigger event when checkboxes are checked from JS
 function triggerEvent(element, eventName) {
     var event = document.createEvent("HTMLEvents");
     event.initEvent(eventName, false, true);
     element.dispatchEvent(event);
   }
+
+  //select number of colors
+  function selectColor(number) {
+    const hue = number * 137.508; // use golden angle approximation
+    return `hsl(${hue},50%,75%)`;
+  }
+
+
+
+
+modelLayers = []
+modelButtons = document.querySelectorAll(".model")
+
+for (let i=0;i<modelButtons.length;i++) {
+    modelButton = modelButtons[i]
+    modelButton.onclick = function() {
+        console.log(this.id)
+        modelId = this.id[this.id.length-1]
+
+        if (this.checked) {  
+          modelLayers[modelId] = L.geoJSON(modelPolygons[0].features[modelId], {
+                style: { color: "red", weight: 1, opacity: 0, fillColor: "red", fillOpacity: 0.5 }
+          }).addTo(map);        
+        } else {
+            map.removeLayer(modelLayers[modelId])
+        }
+        }
+}
+
+
+
+

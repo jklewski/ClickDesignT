@@ -28,7 +28,6 @@
 <body style="height:100%">
     <div class="container">
         <div class="map" id="map">
-
         </div>
         <div class="buttongroup">
             <form action="/action_page.php" class="form">
@@ -36,13 +35,13 @@
 
                 </div>
                 <p><i>Model (projection)</i></p>
-                <input id=model1 type=checkbox>
+                <input id=model0 class="model" type=checkbox>
                 <label for="model1">Contemporary</label>
                 <br>
-                <input id=model2 type=checkbox>
+                <input id=model1 class="model" type=checkbox>
                 <label for="model2">RCP2.6</label>
                 <br>
-                <input id=model3 type=checkbox>
+                <input id=model2 class="model" type=checkbox>
                 <label for="model3">RCP8.5</label>
             </form>
         </div>
@@ -84,6 +83,15 @@
         }
         xhttp3.open("GET", "countryINFO.json", false);
         xhttp3.send();
+
+        var modelPolygons = []
+        const xhttp4 = new XMLHttpRequest();
+        xhttp4.onload = function () {
+            modelPolygons = JSON.parse(this.responseText)
+            modelPolygons = [modelPolygons]
+        }
+        xhttp4.open("GET", "out_shapefile_combined.json", false);
+        xhttp4.send();
     </script>
 
     <script src="app.js"></script>
