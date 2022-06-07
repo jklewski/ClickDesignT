@@ -25,11 +25,12 @@ var unique = familyName.filter(function(itm, i, a) {
 for (var i in unique) {
     family = unique[i]
     div = document.createElement("div")
-    div.id = family
+    div.id = family.replace(' ','_')
     btn = document.createElement("input")
     btn.type = "checkbox"
-    btn.id = family+"-b"
-    btn.value = family;
+    btn.id = family.replace(' ','_')+"-b"
+    btn.value = family.replace(' ','_');
+    btn.className = 'familyButtons'
     //btn.onclick = function () { toggleLayer(this.id) }
     p = document.createElement("span");
     p.innerHTML = family + " <i class=icon-collapse id='"+family+"-c'></i> ";
@@ -40,11 +41,17 @@ for (var i in unique) {
     //create sublist of species
     sub_div = document.createElement("div")
     sub_div.className = 'speciesButtonGroups'
-    sub_div.id = family + 'species'
+    sub_div.id = family.replace(' ','_') + 'species'
     for (var j in familyName) {
         if (familyName[j] == unique[i]) {
             btn_sub = document.createElement("input")
             btn_sub.type = "checkbox"
+            btn_sub.id = speciesName[j].replace(' ','_')
+            btn_sub.className = family.replace(' ','_')+"speciesButtons"
+            // Event Listener:
+            btn_sub.addEventListener('change', function(event) {
+                toggleLayer(this)
+            });
             p_sub = document.createElement("span");
             p_sub.innerHTML = speciesName[j]
             sub_div.appendChild(btn_sub)
@@ -58,28 +65,26 @@ for (var i in unique) {
     document.getElementById("buttons").appendChild(div)
     document.getElementById(family+"-c").onclick = function() {
     family=(this.id.slice(0,this.id.length-2))
-    sub_div = document.getElementById(family+'species')
+    sub_div = document.getElementById(family.replace(' ','_')+'species')
     if (sub_div.style.display=='none') {sub_div.style.display=''}
     else {sub_div.style.display='none'}
     }
 }
 
-/*
-for (var i in speciesName) {
-    name = speciesName[i]
-    btn = document.createElement("input")
-    btn.type = "checkbox"
-    btn.id = "id" + i
-    btn.value = name;
-    btn.onclick = function () { toggleLayer(this.id) }
-    p = document.createElement("span");
-    p.innerHTML = name;
-    br = document.createElement("br");
-    document.getElementById("buttons").appendChild(btn)
-    document.getElementById("buttons").appendChild(p)
-    document.getElementById("buttons").appendChild(br)
+var familyButtons = document.querySelectorAll(".familyButtons")
+for (let i=0;i<familyButtons.length;i++) {
+    btn = familyButtons[i]
+    btn.onclick = function(){
+            speciesButtons = document.querySelectorAll("." + this.id.slice(0,this.id.length-2) + "speciesButtons")
+            for (let j = 0; j<speciesButtons.length; j++) {
+                speciesButtons[j].checked = !speciesButtons[j].checked;
+                triggerEvent(speciesButtons[j], 'change');
+            }
+    }
 }
-*/
+
+
+
 
 //function for changing the style when mouse over
 function newstyle(e) {
@@ -166,7 +171,7 @@ countryLayers = L.geoJSON(countryborders, {
     onEachFeature: onEachFeature,
     mouseover: newstyle
 }).addTo(map);
-
+/*
 handleForm = document.querySelector(".form")
 termiteButton = handleForm[0];
 boringButton = handleForm[1];
@@ -256,6 +261,7 @@ model2Button.addEventListener('click', () => {
             fadeLayer([layersModel3_no,layersModel3_yes], 0.5, 0, -0.02, 10) 
         }
         })
+*/
 countryLayers.bringToFront()
 
 // Fade-in a one or severl layers
@@ -269,3 +275,22 @@ function fadeLayer(lyr, startOpacity, finalOpacity, opacityStep, delay) {
       timer = setTimeout(changeOpacity, delay);
     }, delay)
 }
+
+function toggleLayer(btn) {
+    species = btn.id.replace('_',' ')
+    id = speciesName.findIndex((x)=> x==species)
+    console.log(speciesName[id])
+    if (btn.checked) {
+    layers[id] = L.geoJSON(spec[0].features[id], {
+        style: { color: "red", weight: 1, opacity: 0, fillColor: "red", fillOpacity: 1 }
+    }).addTo(map);
+    } else {
+        map.removeLayer(layers[id])
+    }
+}
+
+function triggerEvent(element, eventName) {
+    var event = document.createEvent("HTMLEvents");
+    event.initEvent(eventName, false, true);
+    element.dispatchEvent(event);
+  }
