@@ -85,7 +85,6 @@ for (let i=0;i<familyButtons.length;i++) {
 
 
 
-
 //function for changing the style when mouse over
 function newstyle(e) {
     var targetLayer = e.target;
@@ -106,6 +105,9 @@ function resetStyle(e) {
     countryLayers.resetStyle(e.target);
 }
 function clickEvent(e) {
+    infoModal = document.querySelector('#myModal')
+
+
     //check if the target has any info
     var cname = e.target.feature.properties.NAME_EN
     var labels = ['Recorded Insects',
@@ -128,7 +130,7 @@ function clickEvent(e) {
         'Regulations for PCO',
         'Source'];
 
-    for (let i = 0; i < cinfo.length; i++) {
+    /*for (let i = 0; i < cinfo.length; i++) {
         //if correct country, create a new div for adding text
         if (cname.includes(cinfo[i].NAME_EN)) {
             var divEl = document.querySelector(".popup-content")
@@ -147,13 +149,12 @@ function clickEvent(e) {
         }
         else {
         }
-        const popup = document.querySelector(".popup")
-        const main_popup = document.querySelector(".main-popup")
-        popup.style.display = 'flex';
-        main_popup.style.cssText = 'animation: slide-in .5s ease; animation-fill-mode: forwards'
-    }
-}
+        */
 
+        $('#myModal').modal('show');
+    }
+    
+  
 //set two above functions to fire on layer basis
 function onEachFeature(feature, layer) {
     layer.on({
