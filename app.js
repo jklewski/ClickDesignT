@@ -110,9 +110,7 @@ function clickEvent(e) {
 
     //check if the target has any info
     var cname = e.target.feature.properties.NAME_EN
-    var labels = ['Recorded Insects',
-        'Recorded Subterranean termites',
-        'Recored drywood termites',
+    var labels = [
         'Insects considered by building code?',
         'Existing regulations',
         'National durability requirements',
@@ -130,26 +128,18 @@ function clickEvent(e) {
         'Regulations for PCO',
         'Source'];
 
-    /*for (let i = 0; i < cinfo.length; i++) {
-        //if correct country, create a new div for adding text
-        if (cname.includes(cinfo[i].NAME_EN)) {
-            var divEl = document.querySelector(".popup-content")
-            for (let j = 0; j < Object.keys(cinfo[0]).length - 2; j++) {
-                //create one text node for each entry
-                var node = document.createElement("p");
-                var desc = document.createElement("p");
-                node.className = "popup-txt"
-                node.className = "popup-desc"
-                node.innerText = String(cinfo[i]['F' + (j + 1)].replace("\n", "\n"));
-                desc.innerText = String(labels[j] + "\n");
-                divEl.appendChild(desc);
-                divEl.appendChild(node);
-                divEl.appendChild(document.createElement("br"));
+    listNames = cinfo.map((x)=> x.NAME_EN)
+    id = listNames.findIndex( (x) => x==cname)
+
+    for (let i = 1; i < 7; i++) {  
+                var textDiv = document.getElementById("text" + i)
+                var headP = document.getElementById("head" + i)
+                var node = document.createElement('p')
+                node.innerText = String(cinfo[id]['F' + (i+4)].replace("\n", "\n"));
+                headP.innerText = String(labels[i])
+                textDiv.appendChild(node);
+                textDiv.appendChild(document.createElement("br"));
             }
-        }
-        else {
-        }
-        */
 
         $('#myModal').modal('show');
     }
