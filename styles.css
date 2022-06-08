@@ -13,17 +13,19 @@ html {
     position:absolute;
     z-index:2;
     width:100vw;
+    top:0px
 }
 
 .nav-tabs {
     background-color:#212121;
   }  
 
-.tab-pane {
-    background-color:#303030; 
+.tab-pane .fade{
+    background-color:#ffffff; 
     height:100%;
   }
   
+
 
 .icon-collapse:hover{
     background-color: black

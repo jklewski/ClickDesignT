@@ -227,5 +227,51 @@ for (let i=0;i<modelButtons.length;i++) {
 }
 
 
+//create table
 
+function createTable(model) {
 
+    divBody = document.createElement('div')
+    divBody.style = "height: 300px; overflow-y:auto; background-color:white"
+    divBody.id = "tblBody"
+    tbl = document.createElement('table');
+    tbl.style.border = '3px solid black';
+    tbl.id = 'table';
+  
+    var header = tbl.createTHead();
+    var row = header.insertRow(0);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+
+    cell1.innerHTML = "<b>Name</b>";
+    cell2.innerHTML = "<b>Latin name</b>";
+    cell3.innerHTML = "<b>Durability</b>";
+    cell1.style.color = "rgb(255,255,255)"
+    cell2.style.color = "rgb(255,255,255)"
+    cell3.style.color = "rgb(255,255,255)"
+    cell1.style.backgroundColor = "rgb(0,0,0)"
+    cell2.style.backgroundColor = "rgb(0,0,0)"
+    cell3.style.backgroundColor = "rgb(0,0,0)"
+
+  
+    tblBody = document.createElement("tbody");
+    for (let i = 0; i < materialResistance.length; i++) {
+      const tr = tblBody.insertRow();
+      tr.style.border = '1px solid black';
+      tr.name = 'test'
+      const td = tr.insertCell();
+      const td2 = tr.insertCell();
+      const td3 = tr.insertCell();
+  
+      td.innerHTML = materialResistance[i].Com
+      td2.innerHTML = "<i>" + materialResistance[i].Sci + "</i>"
+      td3.innerHTML = materialResistance[i].Dur
+    }
+  
+    tbl.appendChild(tblBody)
+    divBody.appendChild(tbl);
+    prnt = document.getElementById("tablediv")
+    prnt.appendChild(divBody);
+  }
+  createTable(true)
